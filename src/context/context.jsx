@@ -5,23 +5,21 @@ let API_KEY = "b163edbe68f64a53a7d512b97b4aec92";
 
 const NewsProvider = ({ children }) => {
   const [newsData, setNewsData] = useState([]);
+
   const [category, setCategory] = useState("");
-  const [userInput, setUserInput] = useState(" ");
+  const [userInput, setUserInput] = useState("");
 
   //   https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}
 
   const apiCall = async () => {
     try {
       let data = await fetch(
-        `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${API_KEY}`
+        `https://newsapi.org/v2/top-headlines/?country=us&category=${category}&apiKey=${API_KEY}`
       );
 
+      console.log(category);
       let response = await data.json();
-
-      if (userInput.includes(response.articles)) {
-        console.log(userInput.includes(response.articles));
-        setNewsData(response.articles);
-      } else setNewsData(response.articles);
+      setNewsData(response.articles);
     } catch (error) {
       console.log(error);
     }
@@ -36,6 +34,7 @@ const NewsProvider = ({ children }) => {
     let userInputValue = e.target.value;
     setUserInput((pre) => userInputValue);
   };
+
   const handleOnUserClick = () => {
     apiCall();
   };
